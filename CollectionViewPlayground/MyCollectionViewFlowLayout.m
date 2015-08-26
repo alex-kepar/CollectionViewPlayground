@@ -10,11 +10,11 @@
 
 @interface MyCollectionViewFlowLayout ()
 @property NSInteger currentPage;
+@property (readonly) CGFloat contentInsetLeftRight;
 @end
 
 @implementation MyCollectionViewFlowLayout
 
-CGFloat contentInsetLeftRight;
 CGFloat pageSize;
 
 //CGFloat contentInsetTopBottom;
@@ -36,6 +36,12 @@ CGFloat pageSize;
 //    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 //}
 
+- (CGFloat)contentInsetLeftRight
+{
+    return  (self.collectionView.bounds.size.width  - self.itemSize.width) * 0.5f;
+}
+
+
 -(void)scrollToPage:(NSInteger)page
 {
     [self scrollToPage:page animated:NO];
@@ -55,14 +61,13 @@ CGFloat pageSize;
     if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal)
     {
         pageSize = self.itemSize.width + self.minimumLineSpacing;
-        contentInsetLeftRight = (self.collectionView.bounds.size.width  - self.itemSize.width) * 0.5f;
         self.minimumInteritemSpacing = self.collectionView.bounds.size.height;
         NSLog(@"contentOffset: %@", NSStringFromCGPoint(self.collectionView.contentOffset));
         self.currentPage = round(self.collectionView.contentOffset.x / pageSize);
         self.collectionView.contentOffset = CGPointMake(self.currentPage * pageSize, self.collectionView.contentOffset.y);
         NSLog(@"new contentOffset: %@ for page: %ld and contentInsetLeftRight: %0.0f",
               NSStringFromCGPoint(self.collectionView.contentOffset),
-              (long)self.currentPage, contentInsetLeftRight);
+              (long)self.currentPage, self.contentInsetLeftRight);
         if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortrait ||
             [[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationPortraitUpsideDown ) {
             NSLog(@"Portant orientation");
@@ -149,7 +154,7 @@ CGFloat pageSize;
 - (CGSize)collectionViewContentSize
 {
     CGSize superSize = [super collectionViewContentSize];
-    superSize.width += contentInsetLeftRight * 2;
+    superSize.width += self.contentInsetLeftRight * 2;
     return superSize;
 }
 
@@ -167,7 +172,7 @@ CGFloat pageSize;
 -(void)correctFrameForItemAttributes:(UICollectionViewLayoutAttributes*)itemAttributes
 {
     CGRect newFrame = itemAttributes.frame;
-    newFrame.origin.x += contentInsetLeftRight;
+    newFrame.origin.x += self.contentInsetLeftRight;
     NSLog(@"attribute (%ld - %ld)\torigin: %@\tnew origin: %@",
           (long)itemAttributes.indexPath.section,
           (long)itemAttributes.indexPath.row,

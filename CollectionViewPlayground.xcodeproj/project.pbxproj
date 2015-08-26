@@ -21,6 +21,7 @@
 		22C71FFE1B7E33520090CB31 /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C71FFD1B7E33520090CB31 /* MyCollectionViewController.m */; };
 		22C720011B7E3B5E0090CB31 /* PagedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C720001B7E3B5E0090CB31 /* PagedViewController.m */; };
 		22C720041B7E3DE90090CB31 /* PageContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C720031B7E3DE90090CB31 /* PageContentTableViewController.m */; };
+		88C29A1C1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m in Sources */ = {isa = PBXBuildFile; fileRef = 88C29A1B1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,8 @@
 		22C720001B7E3B5E0090CB31 /* PagedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagedViewController.m; sourceTree = "<group>"; };
 		22C720021B7E3DE90090CB31 /* PageContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentTableViewController.h; sourceTree = "<group>"; };
 		22C720031B7E3DE90090CB31 /* PageContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentTableViewController.m; sourceTree = "<group>"; };
+		88C29A1A1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewFlowLayoutWithChangeDistance.h; sourceTree = "<group>"; };
+		88C29A1B1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewFlowLayoutWithChangeDistance.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,8 @@
 				22992D1E1B83377B00C0B5A8 /* MyDetailViewController.m */,
 				22906A611B84B8DC000E25EA /* KTCenterFlowLayout.h */,
 				22906A621B84B8DC000E25EA /* KTCenterFlowLayout.m */,
+				88C29A1A1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.h */,
+				88C29A1B1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m */,
 			);
 			path = CollectionViewPlayground;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 			files = (
 				22C71FFE1B7E33520090CB31 /* MyCollectionViewController.m in Sources */,
 				22906A631B84B8DC000E25EA /* KTCenterFlowLayout.m in Sources */,
+				88C29A1C1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m in Sources */,
 				22C71FDF1B7E2F9C0090CB31 /* ViewController.m in Sources */,
 				22C720041B7E3DE90090CB31 /* PageContentTableViewController.m in Sources */,
 				22C71FDC1B7E2F9C0090CB31 /* AppDelegate.m in Sources */,
