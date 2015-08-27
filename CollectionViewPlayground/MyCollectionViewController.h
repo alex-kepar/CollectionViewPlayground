@@ -12,5 +12,11 @@
 
 @property NSInteger pagesCount;
 @property NSInteger rowsCount;
+@property NSInteger minSpacingForLine;
+@property BOOL pagingEnabled;
+@property BOOL centeringEnabled;
+@property BOOL fastSlippingEnabled;
+@property BOOL infinityScrollingEnabled;
+
 
 @end

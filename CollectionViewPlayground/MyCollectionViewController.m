@@ -10,6 +10,7 @@
 #import "MyCollectionViewCell.h"
 #import "MyDetailViewController.h"
 #import "MyCollectionViewFlowLayout.h"
+#import "MyCyrcleLayout.h"
 
 @interface MyCollectionViewController ()
 {
@@ -25,6 +26,15 @@ static NSString * const reuseIdentifier = @"cellsTemplate";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if ([self.collectionViewLayout isKindOfClass:[MyCyrcleLayout class]])
+    {
+        MyCyrcleLayout *layout = (MyCyrcleLayout*)self.collectionViewLayout;
+        layout.minimumLineSpacing = self.minSpacingForLine;
+        layout.pagingEnabled = self.pagingEnabled;
+        layout.centeringEnabled = self.centeringEnabled;
+        layout.fastSlippingEnabled = self.fastSlippingEnabled;
+        layout.infinityScrollingEnabled = self.infinityScrollingEnabled;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

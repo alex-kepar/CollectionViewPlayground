@@ -90,6 +90,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22B901B71B8F2D7200459FDD /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				223CC60C1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.h */,
+				223CC60D1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.m */,
+				88C29A1A1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.h */,
+				88C29A1B1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m */,
+				22B901B11B8F0F9E00459FDD /* MyCyrcleLayout.h */,
+				22B901B21B8F0F9E00459FDD /* MyCyrcleLayout.m */,
+				22B901B41B8F1B9100459FDD /* MyCyrcleLayoutOriginal.h */,
+				22B901B51B8F1B9100459FDD /* MyCyrcleLayoutOriginal.m */,
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
 		22C71FCA1B7E2F9A0090CB31 = {
 			isa = PBXGroup;
 			children = (
@@ -119,26 +134,19 @@
 				22C71FE31B7E2F9C0090CB31 /* Images.xcassets */,
 				22C71FE51B7E2F9C0090CB31 /* LaunchScreen.xib */,
 				22C71FD61B7E2F9B0090CB31 /* Supporting Files */,
+				22B901B71B8F2D7200459FDD /* Layouts */,
 				22C71FFC1B7E33520090CB31 /* MyCollectionViewController.h */,
 				22C71FFD1B7E33520090CB31 /* MyCollectionViewController.m */,
 				22C71FFF1B7E3B5E0090CB31 /* PagedViewController.h */,
 				22C720001B7E3B5E0090CB31 /* PagedViewController.m */,
 				22C720021B7E3DE90090CB31 /* PageContentTableViewController.h */,
 				22C720031B7E3DE90090CB31 /* PageContentTableViewController.m */,
-				223CC60C1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.h */,
-				223CC60D1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.m */,
 				22992D1A1B8318E600C0B5A8 /* MyCollectionViewCell.h */,
 				22992D1B1B8318E600C0B5A8 /* MyCollectionViewCell.m */,
 				22992D1D1B83377B00C0B5A8 /* MyDetailViewController.h */,
 				22992D1E1B83377B00C0B5A8 /* MyDetailViewController.m */,
 				22906A611B84B8DC000E25EA /* KTCenterFlowLayout.h */,
 				22906A621B84B8DC000E25EA /* KTCenterFlowLayout.m */,
-				88C29A1A1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.h */,
-				88C29A1B1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m */,
-				22B901B11B8F0F9E00459FDD /* MyCyrcleLayout.h */,
-				22B901B21B8F0F9E00459FDD /* MyCyrcleLayout.m */,
-				22B901B41B8F1B9100459FDD /* MyCyrcleLayoutOriginal.h */,
-				22B901B51B8F1B9100459FDD /* MyCyrcleLayoutOriginal.m */,
 			);
 			path = CollectionViewPlayground;
 			sourceTree = "<group>";

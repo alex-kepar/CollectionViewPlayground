@@ -10,4 +10,8 @@
 
 @interface MyCyrcleLayout : UICollectionViewFlowLayout
 
+@property BOOL pagingEnabled;
+@property BOOL centeringEnabled;
+@property BOOL fastSlippingEnabled;
+@property BOOL infinityScrollingEnabled;
 @end
