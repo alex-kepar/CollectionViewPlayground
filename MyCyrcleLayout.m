@@ -25,7 +25,7 @@
 {
     // Handle wrapping the collection view at the boundaries
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
-        if (self.infinityScrollingEnabled) {
+        if (self.infiniteScrollingEnabled) {
             if (self.collectionView.contentOffset.y <= 0.0f) {
                 [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, [super collectionViewContentSize].height + self.minimumLineSpacing)];
             }
@@ -37,7 +37,7 @@
     else
     {
         self.minimumInteritemSpacing = self.collectionView.bounds.size.height;
-        if (self.infinityScrollingEnabled)
+        if (self.infiniteScrollingEnabled)
         {
             if (self.collectionView.contentOffset.x < 0.0f)
             {
@@ -74,7 +74,7 @@
 {
     CGSize contentSize = [super collectionViewContentSize];
     
-    if (self.infinityScrollingEnabled)
+    if (self.infiniteScrollingEnabled)
     {
         // We add the height (or width) of the collection view to the content size to allow us to seemlessly wrap without any screen artifacts
         if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
@@ -102,7 +102,7 @@
     {
         return true;
     }
-    else if (self.infinityScrollingEnabled)
+    else if (self.infiniteScrollingEnabled)
     {
         if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
             if (newBounds.origin.y <= self.collectionView.bounds.size.height) {
@@ -131,7 +131,7 @@
     NSArray* layoutAttributes = [super layoutAttributesForElementsInRect:rect];
     
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
-        if (self.infinityScrollingEnabled) {
+        if (self.infiniteScrollingEnabled) {
             NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:CGRectMake(rect.origin.x,
                                                                                               rect.origin.y - [super collectionViewContentSize].height,
                                                                                               rect.size.width,
@@ -145,7 +145,7 @@
         }
     }
     else {
-        if (self.infinityScrollingEnabled) {
+        if (self.infiniteScrollingEnabled) {
             NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:CGRectMake(rect.origin.x - [super collectionViewContentSize].width,
                                                                                               rect.origin.y,
                                                                                               rect.size.width,
@@ -167,7 +167,7 @@
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionViewLayoutAttributes* layoutAttributes = [super layoutAttributesForItemAtIndexPath:indexPath];
-    if (self.infinityScrollingEnabled) {
+    if (self.infiniteScrollingEnabled) {
         layoutAttributes.center = CGPointMake(layoutAttributes.center.x + self.collectionView.bounds.size.width, layoutAttributes.center.y);
     }
     [self correctFrameForItemAttributes:layoutAttributes];

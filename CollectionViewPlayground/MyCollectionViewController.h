@@ -16,7 +16,7 @@
 @property BOOL pagingEnabled;
 @property BOOL centeringEnabled;
 @property BOOL fastSlippingEnabled;
-@property BOOL infinityScrollingEnabled;
+@property BOOL infiniteScrollingEnabled;
 
 
 @end

@@ -33,7 +33,7 @@ static NSString * const reuseIdentifier = @"cellsTemplate";
         layout.pagingEnabled = self.pagingEnabled;
         layout.centeringEnabled = self.centeringEnabled;
         layout.fastSlippingEnabled = self.fastSlippingEnabled;
-        layout.infinityScrollingEnabled = self.infinityScrollingEnabled;
+        layout.infiniteScrollingEnabled = self.infiniteScrollingEnabled;
     }
 }
 

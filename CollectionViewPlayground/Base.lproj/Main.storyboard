@@ -132,7 +132,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infinity scrolling" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ich-tF-48H">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infinite scrolling" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ich-tF-48H">
                                 <rect key="frame" x="73" y="349" width="132" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="132" id="SjZ-OG-uMJ"/>
@@ -201,7 +201,7 @@
                     <connections>
                         <outlet property="centeringSwitch" destination="WBV-Jd-xrH" id="4fy-ps-VUb"/>
                         <outlet property="fastSlippingSwitch" destination="hEH-lH-3Yv" id="l9w-Um-tnp"/>
-                        <outlet property="infinityScrollingSwitch" destination="Mhd-9r-Egm" id="JNK-Zs-iKw"/>
+                        <outlet property="infiniteScrollingSwitch" destination="Mhd-9r-Egm" id="aHz-uQ-kLA"/>
                         <outlet property="minSpacingForLineLabel" destination="vY3-hF-AJq" id="jan-lZ-8dB"/>
                         <outlet property="minSpacingForLineStepper" destination="vR1-cZ-kKc" id="U6v-q4-B2J"/>
                         <outlet property="pagesCountLabel" destination="Dzo-7L-ILp" id="Y6d-YP-whD"/>

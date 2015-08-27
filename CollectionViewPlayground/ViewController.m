@@ -22,7 +22,7 @@ NSString* const minSpaceForLineLabelFormat = @"Min spacing: %0.0f";
 @property (weak, nonatomic) IBOutlet UISwitch *pagingSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *centeringSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *fastSlippingSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *infinityScrollingSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *infiniteScrollingSwitch;
 @property (weak, nonatomic) IBOutlet UIStepper *minSpacingForLineStepper;
 @property (weak, nonatomic) IBOutlet UILabel *minSpacingForLineLabel;
 
@@ -73,7 +73,7 @@ NSString* const minSpaceForLineLabelFormat = @"Min spacing: %0.0f";
             collectionViewController.pagingEnabled = self.pagingSwitch.on;
             collectionViewController.centeringEnabled = self.centeringSwitch.on;
             collectionViewController.fastSlippingEnabled = self.fastSlippingSwitch.on;
-            collectionViewController.infinityScrollingEnabled = self.infinityScrollingSwitch.on;
+            collectionViewController.infiniteScrollingEnabled = self.infiniteScrollingSwitch.on;
         }
     }
 }
