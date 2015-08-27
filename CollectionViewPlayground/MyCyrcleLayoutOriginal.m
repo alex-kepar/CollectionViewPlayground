@@ -1,18 +1,14 @@
 //
-//  MyCyrcleLayout.m
+//  MyCyrcleLayoutOriginal.m
 //  CollectionViewPlayground
 //
 //  Created by Oleksandr Kiporenko on 8/27/15.
 //  Copyright (c) 2015 QVC. All rights reserved.
 //
 
-#import "MyCyrcleLayout.h"
+#import "MyCyrcleLayoutOriginal.h"
 
-@interface MyCyrcleLayout()
-//@property (nonatomic) CGRect prevBounds;
-@end
-
-@implementation MyCyrcleLayout
+@implementation MyCyrcleLayoutOriginal
 
 - (void)prepareLayout
 {

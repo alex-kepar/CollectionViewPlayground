@@ -12,6 +12,7 @@
 		22992D1C1B8318E600C0B5A8 /* MyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22992D1B1B8318E600C0B5A8 /* MyCollectionViewCell.m */; };
 		22992D1F1B83377B00C0B5A8 /* MyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22992D1E1B83377B00C0B5A8 /* MyDetailViewController.m */; };
 		22B901B31B8F0F9E00459FDD /* MyCyrcleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B901B21B8F0F9E00459FDD /* MyCyrcleLayout.m */; };
+		22B901B61B8F1B9100459FDD /* MyCyrcleLayoutOriginal.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B901B51B8F1B9100459FDD /* MyCyrcleLayoutOriginal.m */; };
 		22C71FD91B7E2F9B0090CB31 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C71FD81B7E2F9B0090CB31 /* main.m */; };
 		22C71FDC1B7E2F9C0090CB31 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C71FDB1B7E2F9C0090CB31 /* AppDelegate.m */; };
 		22C71FDF1B7E2F9C0090CB31 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C71FDE1B7E2F9C0090CB31 /* ViewController.m */; };
@@ -46,6 +47,8 @@
 		22992D1E1B83377B00C0B5A8 /* MyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDetailViewController.m; sourceTree = "<group>"; };
 		22B901B11B8F0F9E00459FDD /* MyCyrcleLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCyrcleLayout.h; path = ../MyCyrcleLayout.h; sourceTree = "<group>"; };
 		22B901B21B8F0F9E00459FDD /* MyCyrcleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCyrcleLayout.m; path = ../MyCyrcleLayout.m; sourceTree = "<group>"; };
+		22B901B41B8F1B9100459FDD /* MyCyrcleLayoutOriginal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCyrcleLayoutOriginal.h; sourceTree = "<group>"; };
+		22B901B51B8F1B9100459FDD /* MyCyrcleLayoutOriginal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCyrcleLayoutOriginal.m; sourceTree = "<group>"; };
 		22C71FD31B7E2F9B0090CB31 /* CollectionViewPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollectionViewPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22C71FD71B7E2F9B0090CB31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22C71FD81B7E2F9B0090CB31 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -134,6 +137,8 @@
 				88C29A1B1B8E5DA200055AF1 /* MyCollectionViewFlowLayoutWithChangeDistance.m */,
 				22B901B11B8F0F9E00459FDD /* MyCyrcleLayout.h */,
 				22B901B21B8F0F9E00459FDD /* MyCyrcleLayout.m */,
+				22B901B41B8F1B9100459FDD /* MyCyrcleLayoutOriginal.h */,
+				22B901B51B8F1B9100459FDD /* MyCyrcleLayoutOriginal.m */,
 			);
 			path = CollectionViewPlayground;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				22C720011B7E3B5E0090CB31 /* PagedViewController.m in Sources */,
 				22992D1C1B8318E600C0B5A8 /* MyCollectionViewCell.m in Sources */,
 				22C71FD91B7E2F9B0090CB31 /* main.m in Sources */,
+				22B901B61B8F1B9100459FDD /* MyCyrcleLayoutOriginal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
