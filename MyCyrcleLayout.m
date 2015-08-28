@@ -44,12 +44,12 @@
         self.minimumInteritemSpacing = self.collectionView.bounds.size.height;
         if (self.infiniteScrollingEnabled)
         {
-            if (self.collectionView.contentOffset.x <= 0.0f)
+            if (self.collectionView.contentOffset.x <= 0.0f + self.contentInsetLeftRight)
             {
-                CGPoint newContentOffset = CGPointMake([super collectionViewContentSize].width + self.minimumLineSpacing, self.collectionView.contentOffset.y);
+                CGPoint newContentOffset = CGPointMake([super collectionViewContentSize].width + self.minimumLineSpacing + self.contentInsetLeftRight, self.collectionView.contentOffset.y);
                 if (self.pagingEnabled)
                 {
-                    self.currentPage = [self.collectionView numberOfItemsInSection:0];
+                    //self.currentPage = [self.collectionView numberOfItemsInSection:0] - self.currentPage;
                     [self.collectionView setContentOffset:newContentOffset animated:NO];
                 }
                 else
@@ -57,12 +57,12 @@
                     [self.collectionView setContentOffset:newContentOffset];
                 }
             }
-            else if (self.collectionView.contentOffset.x >= [super collectionViewContentSize].width + self.minimumLineSpacing)
+            else if (self.collectionView.contentOffset.x >= [super collectionViewContentSize].width + self.minimumLineSpacing + self.contentInsetLeftRight)
             {
-                CGPoint newContentOffset = CGPointMake(0.0f, self.collectionView.contentOffset.y);
+                CGPoint newContentOffset = CGPointMake(self.contentInsetLeftRight, self.collectionView.contentOffset.y);
                 if (self.pagingEnabled)
                 {
-                    self.currentPage = 0;
+                    //self.currentPage = self.currentPage % [self.collectionView numberOfItemsInSection:0];
                     [self.collectionView setContentOffset:newContentOffset animated:NO];
                 }
                 else
@@ -91,10 +91,10 @@
             contentSize = CGSizeMake(contentSize.width + self.collectionView.bounds.size.width + self.minimumLineSpacing, contentSize.height);
         }
     }
-    else if (self.centeringEnabled)
-    {
+    //if (self.centeringEnabled)
+    //{
         contentSize.width += self.contentInsetLeftRight * 2;
-    }
+    //}
     return contentSize;
 }
 
@@ -136,6 +136,8 @@
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
+    rect = CGRectMake(rect.origin.x - self.contentInsetLeftRight, rect.origin.y, rect.size.width, rect.size.height);
+    NSLog(@"rect = %@", NSStringFromCGRect(rect));
     NSArray* layoutAttributes = [super layoutAttributesForElementsInRect:rect];
     
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical)
@@ -159,14 +161,15 @@
     {
         if (self.infiniteScrollingEnabled)
         {
-            NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:CGRectMake(rect.origin.x - [super collectionViewContentSize].width,
+            CGFloat superWidth = [super collectionViewContentSize].width;
+            NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:CGRectMake(rect.origin.x - superWidth,
                                                                                               rect.origin.y,
                                                                                               rect.size.width,
                                                                                               rect.size.height)];
             
             for (UICollectionViewLayoutAttributes* attributes in wrappingAttributes)
             {
-                attributes.center = CGPointMake(attributes.center.x + [super collectionViewContentSize].width + self.minimumLineSpacing, attributes.center.y);
+                attributes.center = CGPointMake(attributes.center.x + superWidth + self.minimumLineSpacing, attributes.center.y);
             }
             
             layoutAttributes = [layoutAttributes arrayByAddingObjectsFromArray:wrappingAttributes];
@@ -224,7 +227,10 @@
 
 - (CGFloat)contentInsetLeftRight
 {
-    return  (self.collectionView.bounds.size.width  - self.itemSize.width) * 0.5f;
+    if (self.centeringEnabled) {
+        return  (self.collectionView.bounds.size.width - self.itemSize.width) * 0.5f;
+    }
+    return 0;
 }
 
 -(CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset
@@ -255,7 +261,15 @@
             propousedPage = self.currentPage + 1;
         }
         proposedContentOffset.x = propousedPage * self.pageWidth;//candidateAttributes.center.x - self.collectionView.bounds.size.width * 0.5f;
-        
+        NSInteger numberOfPages = [self.collectionView numberOfItemsInSection:0];
+        if (propousedPage < 0)
+        {
+            self.currentPage = numberOfPages + propousedPage;
+        }
+        else if (propousedPage >= numberOfPages)
+        {
+            self.currentPage = propousedPage - numberOfPages;
+        }
         self.currentPage = propousedPage;
         //NSLog(@"proposedContentOffset: %@ proposedPage: %d velocity: %@", NSStringFromCGPoint(proposedContentOffset), propousedPage, NSStringFromCGPoint(velocity));
     }
