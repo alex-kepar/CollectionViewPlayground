@@ -44,7 +44,6 @@
                                 </constraints>
                                 <connections>
                                     <action selector="pagesStepperAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="IYh-qY-zKG"/>
-                                    <action selector="rowsStepperAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="pE0-by-K7f"/>
                                 </connections>
                             </stepper>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minimumValue="1" maximumValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="RtY-0N-Qm7">

@@ -56,6 +56,7 @@ NSString* const minSpaceForLineLabelFormat = @"Min spacing: %0.0f";
 - (IBAction)rowsStepperAction:(UIStepper *)sender {
     [self updateLabel:self.rowsCountLabel withFormat:rowsLabelFormat toValue:sender.value];
 }
+
 - (IBAction)minSpacingForLineStepperAction:(UIStepper *)sender {
     [self updateLabel:self.minSpacingForLineLabel withFormat:minSpaceForLineLabelFormat toValue:sender.value];
 }
