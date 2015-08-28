@@ -39,7 +39,7 @@
         self.minimumInteritemSpacing = self.collectionView.bounds.size.height;
         if (self.infiniteScrollingEnabled)
         {
-            if (self.collectionView.contentOffset.x < 0.0f)
+            if (self.collectionView.contentOffset.x <= 0.0f)
             {
                 CGPoint newContentOffset = CGPointMake([super collectionViewContentSize].width + self.minimumLineSpacing, self.collectionView.contentOffset.y);
                 if (self.pagingEnabled)
@@ -52,7 +52,7 @@
                     [self.collectionView setContentOffset:newContentOffset];
                 }
             }
-            else if (self.collectionView.contentOffset.x > [super collectionViewContentSize].width + self.minimumLineSpacing)
+            else if (self.collectionView.contentOffset.x >= [super collectionViewContentSize].width + self.minimumLineSpacing)
             {
                 CGPoint newContentOffset = CGPointMake(0.0f, self.collectionView.contentOffset.y);
                 if (self.pagingEnabled)
