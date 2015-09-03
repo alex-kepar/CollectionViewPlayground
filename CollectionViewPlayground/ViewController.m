@@ -19,12 +19,12 @@ NSString* const minSpaceForLineLabelFormat = @"Min spacing: %0.0f";
 @property (weak, nonatomic) IBOutlet UIStepper *rowsStepper;
 @property (weak, nonatomic) IBOutlet UILabel *pagesCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *rowsCountLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *pagingSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *centeringSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *fastSlippingSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *infiniteScrollingSwitch;
 @property (weak, nonatomic) IBOutlet UIStepper *minSpacingForLineStepper;
 @property (weak, nonatomic) IBOutlet UILabel *minSpacingForLineLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *pagingStyle;
 
 @end
 
@@ -71,7 +71,7 @@ NSString* const minSpaceForLineLabelFormat = @"Min spacing: %0.0f";
             collectionViewController.pagesCount = self.pagesStepper.value;
             collectionViewController.rowsCount = self.rowsStepper.value;
             collectionViewController.minSpacingForLine = self.minSpacingForLineStepper.value;
-            collectionViewController.pagingEnabled = self.pagingSwitch.on;
+            collectionViewController.pagingStyle = self.pagingStyle.selectedSegmentIndex;
             collectionViewController.centeringEnabled = self.centeringSwitch.on;
             collectionViewController.fastSlippingEnabled = self.fastSlippingSwitch.on;
             collectionViewController.infiniteScrollingEnabled = self.infiniteScrollingSwitch.on;

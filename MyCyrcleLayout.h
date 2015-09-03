@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, MyCyrcleLayoutPagingStyle) {
+    MyCyrcleLayoutPagingStyleOff,
+    MyCyrcleLayoutPagingStyleStepping,
+    MyCyrcleLayoutPagingStyleRunning
+};
+
 @interface MyCyrcleLayout : UICollectionViewFlowLayout
 
-@property BOOL pagingEnabled;
+@property MyCyrcleLayoutPagingStyle pagingStyle;
 @property BOOL centeringEnabled;
 @property BOOL fastSlippingEnabled;
 @property BOOL infiniteScrollingEnabled;

@@ -41,34 +41,54 @@
     }
     else
     {
-        self.minimumInteritemSpacing = self.collectionView.bounds.size.height;
+        self.minimumInteritemSpacing = self.collectionView.bounds.size.height + self.itemSize.height;
         if (self.infiniteScrollingEnabled)
         {
-            if (self.collectionView.contentOffset.x <= 0.0f + self.contentInsetLeftRight)
+            CGFloat minXContentRange = 0.0f;
+            CGFloat maxXContentRange = [super collectionViewContentSize].width + self.minimumLineSpacing;
+            if (self.collectionView.contentOffset.x <= minXContentRange + self.contentInsetLeftRight)
             {
-                CGPoint newContentOffset = CGPointMake([super collectionViewContentSize].width + self.minimumLineSpacing + self.contentInsetLeftRight, self.collectionView.contentOffset.y);
-                if (self.pagingEnabled)
+                //                CGPoint newContentOffset = CGPointMake([super collectionViewContentSize].width + self.minimumLineSpacing + self.contentInsetLeftRight, self.collectionView.contentOffset.y);
+                //CGPoint newContentOffset = CGPointMake([super collectionViewContentSize].width + self.minimumLineSpacing, self.collectionView.contentOffset.y);
+                if (self.pagingStyle == MyCyrcleLayoutPagingStyleOff)
                 {
+                    [self.collectionView setContentOffset:CGPointMake(maxXContentRange, self.collectionView.contentOffset.y)];
+                }
+                else
+                {
+                    NSLog(@"(prepareLayout x<=0) old currentPage: %li", self.currentPage);
+                    self.currentPage += [self.collectionView numberOfItemsInSection:0];
+                    NSLog(@"(prepareLayout x<=0) new currentPage: %li", self.currentPage);
+                    CGPoint newContentOffset = CGPointMake(self.currentPage * self.pageWidth, self.collectionView.contentOffset.y);
                     //self.currentPage = [self.collectionView numberOfItemsInSection:0] - self.currentPage;
                     [self.collectionView setContentOffset:newContentOffset animated:NO];
                 }
+            }
+            else if (self.collectionView.contentOffset.x >= maxXContentRange + self.contentInsetLeftRight)
+            {
+                if (self.pagingStyle == MyCyrcleLayoutPagingStyleOff)
+                {
+                    [self.collectionView setContentOffset:CGPointMake(minXContentRange, self.collectionView.contentOffset.y)];
+                }
                 else
                 {
-                    [self.collectionView setContentOffset:newContentOffset];
-                }
-            }
-            else if (self.collectionView.contentOffset.x >= [super collectionViewContentSize].width + self.minimumLineSpacing + self.contentInsetLeftRight)
-            {
-                CGPoint newContentOffset = CGPointMake(self.contentInsetLeftRight, self.collectionView.contentOffset.y);
-                if (self.pagingEnabled)
-                {
-                    //self.currentPage = self.currentPage % [self.collectionView numberOfItemsInSection:0];
+                    NSLog(@"(prepareLayout x>=width) old currentPage: %li", self.currentPage);
+                    self.currentPage = self.currentPage % [self.collectionView numberOfItemsInSection:0];
+                    NSLog(@"(prepareLayout x>=width) new currentPage: %li", self.currentPage);
+                    CGPoint newContentOffset = CGPointMake(self.currentPage * self.pageWidth, self.collectionView.contentOffset.y);
+                    //self.currentPage = 0;
                     [self.collectionView setContentOffset:newContentOffset animated:NO];
                 }
-                else
-                {
-                    [self.collectionView setContentOffset:newContentOffset];
+
+                /*
+                 Original:
+                if (self.collectionView.contentOffset.x <= 0.0f) {
+                    [self.collectionView setContentOffset:CGPointMake([super collectionViewContentSize].width + self.minimumLineSpacing, self.collectionView.contentOffset.y)];
                 }
+                else if (self.collectionView.contentOffset.x >= [super collectionViewContentSize].width + self.minimumLineSpacing) {
+                    [self.collectionView setContentOffset:CGPointMake(0.0f, self.collectionView.contentOffset.y)];
+                }
+                */
             }
         }
     }
@@ -137,7 +157,7 @@
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     rect = CGRectMake(rect.origin.x - self.contentInsetLeftRight, rect.origin.y, rect.size.width, rect.size.height);
-    NSLog(@"rect = %@", NSStringFromCGRect(rect));
+    //NSLog(@"rect = %@", NSStringFromCGRect(rect));
     NSArray* layoutAttributes = [super layoutAttributesForElementsInRect:rect];
     
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical)
@@ -235,13 +255,13 @@
 
 -(CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset
 {
-    if (self.pagingEnabled)
+    if (self.pagingStyle == MyCyrcleLayoutPagingStyleOff)
     {
-        proposedContentOffset.x = self.currentPage * self.pageWidth;
+        proposedContentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
     }
     else
     {
-        proposedContentOffset = [super targetContentOffsetForProposedContentOffset:proposedContentOffset];
+        proposedContentOffset.x = self.currentPage * self.pageWidth;
     }
     return proposedContentOffset;
 }
@@ -249,28 +269,49 @@
 #pragma mark paging handling
 -(CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
-    if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal && self.pagingEnabled)
+    if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal
+        && self.pagingStyle != MyCyrcleLayoutPagingStyleOff)
     {
         NSInteger propousedPage = round(proposedContentOffset.x / self.pageWidth);
-        if (propousedPage < self.currentPage)
+        if (self.pagingStyle == MyCyrcleLayoutPagingStyleStepping)
         {
-            propousedPage = self.currentPage - 1;
-        }
-        else if (propousedPage > self.currentPage)
-        {
-            propousedPage = self.currentPage + 1;
+            if (propousedPage < self.currentPage)
+            {
+                propousedPage = self.currentPage - 1;
+            }
+            else if (propousedPage > self.currentPage)
+            {
+                propousedPage = self.currentPage + 1;
+            }
         }
         proposedContentOffset.x = propousedPage * self.pageWidth;//candidateAttributes.center.x - self.collectionView.bounds.size.width * 0.5f;
-        NSInteger numberOfPages = [self.collectionView numberOfItemsInSection:0];
-        if (propousedPage < 0)
+//
+//        if (propousedPage < 0)
+//        {
+//            self.currentPage = numberOfPages + propousedPage;
+//        }
+//        else if (propousedPage >= numberOfPages)
+//        {
+//            self.currentPage = propousedPage - numberOfPages;
+//        }
+        NSLog(@"okd currentPage: %li; proposedPage: %li", self.currentPage, propousedPage);
+        if (!self.infiniteScrollingEnabled)
         {
-            self.currentPage = numberOfPages + propousedPage;
-        }
-        else if (propousedPage >= numberOfPages)
-        {
-            self.currentPage = propousedPage - numberOfPages;
+            if (propousedPage < 0)
+            {
+                propousedPage = 0;
+            }
+            else
+            {
+                NSInteger maxPageValue = [self.collectionView numberOfItemsInSection:0] - 1;
+                if (propousedPage > maxPageValue)
+                {
+                    propousedPage = maxPageValue;
+                }
+            }
         }
         self.currentPage = propousedPage;
+        NSLog(@"new currentPage: %li", self.currentPage);
         //NSLog(@"proposedContentOffset: %@ proposedPage: %d velocity: %@", NSStringFromCGPoint(proposedContentOffset), propousedPage, NSStringFromCGPoint(velocity));
     }
     else

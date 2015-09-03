@@ -30,7 +30,7 @@ static NSString * const reuseIdentifier = @"cellsTemplate";
     {
         MyCyrcleLayout *layout = (MyCyrcleLayout*)self.collectionViewLayout;
         layout.minimumLineSpacing = self.minSpacingForLine;
-        layout.pagingEnabled = self.pagingEnabled;
+        layout.pagingStyle = self.pagingStyle;
         layout.centeringEnabled = self.centeringEnabled;
         layout.fastSlippingEnabled = self.fastSlippingEnabled;
         layout.infiniteScrollingEnabled = self.infiniteScrollingEnabled;
@@ -183,5 +183,15 @@ static NSString * const reuseIdentifier = @"cellsTemplate";
 ////    [self.collectionView performBatchUpdates:nil completion:nil];
 //    [self.collectionView.collectionViewLayout invalidateLayout];
 //}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"****************************** scrollViewWillBeginDecelerating");
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"****************************** scrollViewDidEndDecelerating");
+}
 
 @end
