@@ -45,7 +45,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat: @"CellsTemplate%ld", indexPath.row+1] forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat: @"CellsTemplate%d", indexPath.row+1] forIndexPath:indexPath];
     cell.textLabel.text = self.titleText;
     // Configure the cell...
     return cell;

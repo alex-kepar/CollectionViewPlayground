@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIViewController">
+            <connections>
+                <outlet property="view" destination="iN0-l3-epB" id="pSf-AH-UlZ"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="350" height="400"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="hhhh" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="0ig-hN-tRd">
+                    <rect key="frame" x="16" y="87" width="318" height="258"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="258" id="fr9-vD-6Mb"/>
+                        <constraint firstAttribute="width" constant="318" id="hu9-yU-MhI"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="eFa-3R-nlj">
+                        <size key="itemSize" width="45" height="43"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                    <connections>
+                        <outlet property="dataSource" destination="gvd-Z1-XXl" id="UNd-vg-rA5"/>
+                        <outlet property="delegate" destination="gvd-Z1-XXl" id="BzD-p9-B4o"/>
+                    </connections>
+                </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eU-Pq-hsN">
+                    <rect key="frame" x="0.0" y="0.0" width="350" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="NMJ-1v-RMC">
+                    <rect key="frame" x="16" y="29" width="318" height="58"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="318" id="4vQ-3S-Cl3"/>
+                        <constraint firstAttribute="height" constant="58" id="7ug-OY-Skk"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VIu-au-A4Z">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <cells/>
+                    <connections>
+                        <outlet property="dataSource" destination="Zxc-yY-qXq" id="ixE-jA-QLQ"/>
+                        <outlet property="delegate" destination="Zxc-yY-qXq" id="YQi-bP-BgA"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="0ig-hN-tRd" secondAttribute="centerX" id="F0N-wL-RdC"/>
+                <constraint firstItem="0ig-hN-tRd" firstAttribute="top" secondItem="NMJ-1v-RMC" secondAttribute="bottom" id="KDm-iT-rqe"/>
+                <constraint firstItem="4eU-Pq-hsN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Y5W-zc-G9b"/>
+                <constraint firstAttribute="trailing" secondItem="4eU-Pq-hsN" secondAttribute="trailing" id="hiL-km-up9"/>
+                <constraint firstItem="4eU-Pq-hsN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lpr-cG-Pko"/>
+                <constraint firstAttribute="centerX" secondItem="NMJ-1v-RMC" secondAttribute="centerX" id="qTb-Ci-5iP"/>
+                <constraint firstItem="NMJ-1v-RMC" firstAttribute="top" secondItem="4eU-Pq-hsN" secondAttribute="bottom" constant="8" id="ygR-ru-Xm0"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="631" y="-22"/>
+        </view>
+        <collectionViewController id="gvd-Z1-XXl">
+            <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" id="N5M-51-Qvc">
+                <rect key="frame" x="0.0" y="0.0" width="318" height="258"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kl1-N4-Cz0">
+                    <size key="itemSize" width="50" height="50"/>
+                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                </collectionViewFlowLayout>
+                <cells/>
+                <connections>
+                    <outlet property="dataSource" destination="gvd-Z1-XXl" id="Lf9-pG-A1l"/>
+                    <outlet property="delegate" destination="gvd-Z1-XXl" id="027-cF-xuA"/>
+                </connections>
+            </collectionView>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <size key="freeformSize" width="318" height="258"/>
+            <connections>
+                <outlet property="view" destination="0ig-hN-tRd" id="CLR-me-ipD"/>
+            </connections>
+            <point key="canvasLocation" x="216" y="60"/>
+        </collectionViewController>
+        <collectionViewController id="Zxc-yY-qXq">
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <size key="freeformSize" width="318" height="58"/>
+            <connections>
+                <outlet property="view" destination="NMJ-1v-RMC" id="f9j-K3-2cP"/>
+            </connections>
+            <point key="canvasLocation" x="216" y="-164"/>
+        </collectionViewController>
+    </objects>
+</document>

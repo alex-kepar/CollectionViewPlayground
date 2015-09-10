@@ -11,6 +11,7 @@
 #import "MyDetailViewController.h"
 #import "MyCollectionViewFlowLayout.h"
 #import "MyCyrcleLayout.h"
+#import "QVCUniSliderFlowLayout.h"
 
 @interface MyCollectionViewController ()
 {
@@ -29,6 +30,15 @@ static NSString * const reuseIdentifier = @"cellsTemplate";
     if ([self.collectionViewLayout isKindOfClass:[MyCyrcleLayout class]])
     {
         MyCyrcleLayout *layout = (MyCyrcleLayout*)self.collectionViewLayout;
+        layout.minimumLineSpacing = self.minSpacingForLine;
+        layout.pagingStyle = self.pagingStyle;
+        layout.centeringEnabled = self.centeringEnabled;
+        layout.fastSlippingEnabled = self.fastSlippingEnabled;
+        layout.infiniteScrollingEnabled = self.infiniteScrollingEnabled;
+    }
+    else if ([self.collectionViewLayout isKindOfClass:[QVCUniSliderFlowLayout class]])
+    {
+        QVCUniSliderFlowLayout *layout = (QVCUniSliderFlowLayout*)self.collectionViewLayout;
         layout.minimumLineSpacing = self.minSpacingForLine;
         layout.pagingStyle = self.pagingStyle;
         layout.centeringEnabled = self.centeringEnabled;
