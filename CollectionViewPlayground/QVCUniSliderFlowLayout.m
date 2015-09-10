@@ -13,7 +13,9 @@
 @property (readonly)  CGFloat contentInsetLeft;
 @property (readonly)  CGFloat contentInsetRight;
 @property NSInteger currentPage;
+@property NSInteger infiniteCurrentPage;
 
+@property (readonly) NSInteger numberPages;
 @end
 
 @implementation QVCUniSliderFlowLayout
@@ -25,6 +27,7 @@
 @synthesize fastSlippingEnabled = _fastSlippingEnabled;
 @synthesize infiniteScrollingEnabled = _infiniteScrollingEnabled;
 @synthesize centerPoint = _centerPoint;
+@synthesize currentPage = _currentPage;
 
 #pragma mark - property handling
 - (NSInteger)currentItemIndex
@@ -55,6 +58,17 @@
         _pagingStyle = pagingStyle;
         [self invalidateLayout];
     }
+}
+
+-(void)setCurrentPage:(NSInteger)currentPage
+{
+    _currentPage = currentPage;
+    self.infiniteCurrentPage = 0;
+}
+
+-(NSInteger)currentPage
+{
+    return _currentPage;
 }
 
 - (BOOL)centeringEnabled
@@ -203,11 +217,15 @@
                 }
                 else
                 {
-                    //NSLog(@"(prepareLayout x<=0) old currentPage: %li", self.currentPage);
-                    self.currentPage += [self.collectionView numberOfItemsInSection:0];
-                    //NSLog(@"(prepareLayout x<=0) new currentPage: %li", self.currentPage);
-                    CGPoint newContentOffset = CGPointMake(self.currentPage * self.pageWidth, self.collectionView.contentOffset.y);
+                    NSLog(@"(prepareLayout x<=0) old currentPage: %li", (long)self.currentPage);
+
+                    CGPoint newContentOffset = CGPointMake(maxXContentRange, self.collectionView.contentOffset.y);
+                    self.infiniteCurrentPage = (NSInteger)round(newContentOffset.x / self.pageWidth);
                     [self.collectionView setContentOffset:newContentOffset animated:NO];
+
+                    NSLog(@"(prepareLayout x<=0) new currentPage: %li", (long)self.currentPage);
+                    NSLog(@"(prepareLayout x<=0) new infiniteCurrentPage: %li", (long)self.infiniteCurrentPage);
+                    NSLog(@"(prepareLayout x<=0) new newContentOffset: %@", NSStringFromCGPoint(newContentOffset));
                 }
             }
             else if (self.collectionView.contentOffset.x >= maxXContentRange + self.contentInsetLeft)
@@ -218,11 +236,15 @@
                 }
                 else
                 {
-                    //NSLog(@"(prepareLayout x>=width) old currentPage: %li", self.currentPage);
-                    self.currentPage = self.currentPage % [self.collectionView numberOfItemsInSection:0];
-                    //NSLog(@"(prepareLayout x>=width) new currentPage: %li", self.currentPage);
-                    CGPoint newContentOffset = CGPointMake(self.currentPage * self.pageWidth, self.collectionView.contentOffset.y);
+                    NSLog(@"(prepareLayout x>=width) old currentPage: %li", (long)self.currentPage);
+
+                    CGPoint newContentOffset = CGPointMake(minXContentRange, self.collectionView.contentOffset.y);
+                    self.infiniteCurrentPage = -self.currentPage;
                     [self.collectionView setContentOffset:newContentOffset animated:NO];
+
+                    NSLog(@"(prepareLayout x>=width) new currentPage: %li", (long)self.currentPage);
+                    NSLog(@"(prepareLayout x>=width) new infiniteCurrentPage: %li", (long)self.infiniteCurrentPage);
+                    NSLog(@"(prepareLayout x>=width) new newContentOffset: %@", NSStringFromCGPoint(newContentOffset));
                 }
             }
         }
@@ -233,6 +255,11 @@
         }
     }
     [super prepareLayout];
+}
+
+- (NSInteger)numberPages
+{
+    return [self.collectionView numberOfItemsInSection:0];
 }
 
 - (CGSize)collectionViewContentSize
@@ -373,16 +400,30 @@
     if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal
         && self.pagingStyle != QVCUniSliderFlowLayoutPagingStyleOff)
     {
+        NSLog(@"proposedContentOffset: %@", NSStringFromCGPoint(proposedContentOffset));
+        NSLog(@"proposedContentOffset: currentPage %i", self.currentPage);
+        NSLog(@"proposedContentOffset: infiniteCurrentPage %i", self.infiniteCurrentPage);
         NSInteger propousedPage = round(proposedContentOffset.x / self.pageWidth);
+        NSLog(@"proposedContentOffset: propousedPage %i", propousedPage);
         if (self.pagingStyle == QVCUniSliderFlowLayoutPagingStyleStepping)
         {
-            if (propousedPage < self.currentPage)
+//            NSInteger pageShifting = propousedPage % self.numberPages - self.currentPage % self.numberPages;
+//            if (pageShifting < 0)
+//            {
+//                propousedPage = self.currentPage - 1;
+//            }
+//            else if (pageShifting > 0)
+//            {
+//                propousedPage = self.currentPage + 1;
+//            }
+            NSInteger currentPage = self.currentPage + self.infiniteCurrentPage;
+            if (propousedPage < currentPage)
             {
-                propousedPage = self.currentPage - 1;
+                propousedPage = currentPage - 1;
             }
-            else if (propousedPage > self.currentPage)
+            else if (propousedPage > currentPage)
             {
-                propousedPage = self.currentPage + 1;
+                propousedPage = currentPage + 1;
             }
         }
         proposedContentOffset.x = propousedPage * self.pageWidth;//candidateAttributes.center.x - self.collectionView.bounds.size.width * 0.5f;
@@ -403,7 +444,7 @@
             }
         }
         self.currentPage = propousedPage;
-        //NSLog(@"new currentPage: %li", self.currentPage);
+        NSLog(@"proposedContentOffset: new currentPage: %li", (long)self.currentPage);
     }
     else
     {
