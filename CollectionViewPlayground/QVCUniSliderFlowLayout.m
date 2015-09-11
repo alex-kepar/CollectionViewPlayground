@@ -12,6 +12,7 @@
 @property (readonly)  CGFloat pageWidth;
 @property (readonly)  CGFloat contentInsetLeft;
 @property (readonly)  CGFloat contentInsetRight;
+@property (readonly)  NSInteger shiftPage;
 @property NSInteger currentPage;
 //@property NSInteger infiniteCurrentPage;
 //@property BOOL shiftToCurrentPage;
@@ -209,8 +210,8 @@
         self.minimumInteritemSpacing = self.collectionView.bounds.size.height + self.itemSize.height;
         if (self.infiniteScrollingEnabled)
         {
-            NSInteger shiftPage = ceil(self.contentInsetLeft/self.pageWidth);
-            CGFloat offset = shiftPage * self.pageWidth;
+            //NSInteger shiftPage = ceil(self.contentInsetLeft/self.pageWidth);
+            CGFloat offset = self.shiftPage * self.pageWidth;
             CGFloat minXContentRange = offset;//self.contentInsetLeft;
             CGFloat maxXContentRange = [super collectionViewContentSize].width + self.minimumLineSpacing + offset;//;self.contentInsetLeft;
             if (self.collectionView.contentOffset.x <= minXContentRange)
@@ -224,7 +225,7 @@
                 }
                 else
                 {
-                    NSInteger range = shiftPage - self.currentPage;
+                    NSInteger range = self.shiftPage - self.currentPage;
                     if (range>=0) {
                         NSLog(@"(prepareLayout x<=0) old currentPage: %i", self.currentPage);
                         self.currentPage += self.numberPages;
@@ -245,7 +246,7 @@
                 }
                 else
                 {
-                    NSInteger range = self.numberPages + shiftPage - self.currentPage;
+                    NSInteger range = self.currentPage - self.numberPages - self.shiftPage;
                     if (range >= 0) {
                         NSLog(@"(prepareLayout x>=width) old currentPage: %i", self.currentPage);
                         self.currentPage -= self.numberPages;
@@ -262,6 +263,11 @@
         }
     }
     [super prepareLayout];
+}
+
+- (NSInteger)shiftPage
+{
+    return ceil(self.contentInsetLeft/self.pageWidth);
 }
 
 - (NSInteger)numberPages
@@ -357,9 +363,10 @@
         if (self.infiniteScrollingEnabled)
         {
             CGFloat superWidth = [super collectionViewContentSize].width;
-            NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:CGRectMake(rect.origin.x - superWidth,
+           // NSLog(@"rect = %@ superWidth = %0.0f", NSStringFromCGRect(rect), superWidth);
+            NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:CGRectMake(self.collectionView.contentOffset.x - superWidth - self.pageWidth - self.contentInsetLeft ,
                                                                                               rect.origin.y,
-                                                                                              rect.size.width,
+                                                                                              superWidth,
                                                                                               rect.size.height)];
             
             for (UICollectionViewLayoutAttributes* attributes in wrappingAttributes)
@@ -463,7 +470,7 @@
             {
                 NSInteger maxPageValue = self.numberPages;
                 if (self.infiniteScrollingEnabled) {
-                    maxPageValue ++;
+                    maxPageValue += self.shiftPage;
                 }
                 if (propousedPage > maxPageValue)
                 {
