@@ -230,7 +230,7 @@
                     if (range>=0) {
                         NSLog(@"(prepareLayout x<=0) old currentPage: %i", self.currentPage);
                         self.currentPage += self.numberPages;
-                        [self.collectionView setContentOffset:CGPointMake(maxXContentRange - range*self.pageWidth, self.collectionView.contentOffset.y) animated:NO];
+                        [self.collectionView setContentOffset:CGPointMake(maxXContentRange - range*self.pageWidth, self.collectionView.contentOffset.y)];
                         NSLog(@"(prepareLayout x<=0) new currentPage: %i", self.currentPage);
                     }
                 }
@@ -251,7 +251,7 @@
                     if (range >= 0) {
                         NSLog(@"(prepareLayout x>=width) old currentPage: %i", self.currentPage);
                         self.currentPage -= self.numberPages;
-                        [self.collectionView setContentOffset:CGPointMake(minXContentRange + range*self.pageWidth, self.collectionView.contentOffset.y) animated:NO];
+                        [self.collectionView setContentOffset:CGPointMake(minXContentRange + range*self.pageWidth, self.collectionView.contentOffset.y)];
                         NSLog(@"(prepareLayout x>=width) new currentPage: %i", self.currentPage);
                     }
                 }
@@ -345,12 +345,14 @@
     if (isBoundsSizeCanged) {
         return YES;
     }
+    return YES;
+    NSLog(@"newBounds = %@", NSStringFromCGRect(newBounds));
     return [super shouldInvalidateLayoutForBoundsChange:newBounds];
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    //rect = CGRectMake(rect.origin.x - self.contentInsetLeft, rect.origin.y, rect.size.width, rect.size.height);
+    rect = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width + self.leftShiftPage*self.pageWidth, rect.size.height);
     NSLog(@"rect = %@", NSStringFromCGRect(rect));
     NSArray* layoutAttributes = [super layoutAttributesForElementsInRect:rect];
     
