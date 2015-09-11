@@ -16,9 +16,8 @@
 @property (readonly)  NSInteger rigthShiftPage;
 @property NSInteger currentPage;
 //@property NSInteger infiniteCurrentPage;
-//@property BOOL shiftToCurrentPage;
+@property BOOL needInvalidate;
 //@property CGFloat overload;
-
 @property (readonly) NSInteger numberPages;
 @end
 
@@ -228,6 +227,7 @@
                 {
                     NSInteger range = self.leftShiftPage - self.currentPage;
                     if (range>=0) {
+                        self.needInvalidate = YES;
                         NSLog(@"(prepareLayout x<=0) old currentPage: %i", self.currentPage);
                         self.currentPage += self.numberPages;
                         [self.collectionView setContentOffset:CGPointMake(maxXContentRange - range*self.pageWidth, self.collectionView.contentOffset.y)];
@@ -249,6 +249,7 @@
                 {
                     NSInteger range = self.currentPage - self.numberPages - self.leftShiftPage;
                     if (range >= 0) {
+                        self.needInvalidate;
                         NSLog(@"(prepareLayout x>=width) old currentPage: %i", self.currentPage);
                         self.currentPage -= self.numberPages;
                         [self.collectionView setContentOffset:CGPointMake(minXContentRange + range*self.pageWidth, self.collectionView.contentOffset.y)];
@@ -341,11 +342,14 @@
                 return YES;
             }
         }
+        if (self.needInvalidate) {
+            self.needInvalidate = NO;
+            return YES;
+        }
     }
     if (isBoundsSizeCanged) {
         return YES;
     }
-    return YES;
     NSLog(@"newBounds = %@", NSStringFromCGRect(newBounds));
     return [super shouldInvalidateLayoutForBoundsChange:newBounds];
 }
