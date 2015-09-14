@@ -12,13 +12,11 @@
 @property (readonly)  CGFloat pageWidth;
 @property (readonly)  CGFloat contentInsetLeft;
 @property (readonly)  CGFloat contentInsetRight;
-@property (readonly)  NSInteger leftShiftPage;
-@property (readonly)  NSInteger rigthShiftPage;
-@property NSInteger currentPage;
-//@property NSInteger infiniteCurrentPage;
-@property BOOL needInvalidate;
-//@property CGFloat overload;
+@property (readonly)  NSInteger pagesInsetLeft;
+@property (readonly)  NSInteger pagesInsetRight;
 @property (readonly) NSInteger numberPages;
+@property NSInteger currentPage;
+@property BOOL needInvalidate;
 @end
 
 @implementation QVCUniSliderFlowLayout
@@ -30,26 +28,8 @@
 @synthesize fastSlippingEnabled = _fastSlippingEnabled;
 @synthesize infiniteScrollingEnabled = _infiniteScrollingEnabled;
 @synthesize centerPoint = _centerPoint;
-@synthesize currentPage = _currentPage;
 
-#pragma mark - property handling
-- (NSInteger)currentItemIndex
-{
-    if (self.pagingStyle == QVCUniSliderFlowLayoutPagingStyleOff)
-    {
-        return (NSInteger)round(self.collectionView.contentOffset.x / self.pageWidth) % [self.collectionView numberOfItemsInSection:0];
-    }
-    else
-    {
-        return self.currentPage % [self.collectionView numberOfItemsInSection:0];
-    }
-}
-
-- (void)setCurrentItemIndex:(NSInteger)currentItemIndex
-{
-    return [self setCurrentItemIndex:currentItemIndex animated:NO];
-}
-
+#pragma mark - external property handling
 - (QVCUniSliderFlowLayoutPagingStyle)pagingStyle
 {
     return _pagingStyle;
@@ -62,17 +42,6 @@
         [self invalidateLayout];
     }
 }
-
-//-(void)setCurrentPage:(NSInteger)currentPage
-//{
-//    _currentPage = currentPage;
-//    self.infiniteCurrentPage = 0;
-//}
-
-//-(NSInteger)currentPage
-//{
-//    return _currentPage;
-//}
 
 - (BOOL)centeringEnabled
 {
@@ -98,6 +67,23 @@
         _fastSlippingEnabled = fastSlippingEnabled;
         [self invalidateLayout];
     }
+}
+
+- (NSInteger)currentItemIndex
+{
+    if (self.pagingStyle == QVCUniSliderFlowLayoutPagingStyleOff)
+    {
+        return (NSInteger)round(self.collectionView.contentOffset.x / self.pageWidth) % [self.collectionView numberOfItemsInSection:0];
+    }
+    else
+    {
+        return self.currentPage % [self.collectionView numberOfItemsInSection:0];
+    }
+}
+
+- (void)setCurrentItemIndex:(NSInteger)currentItemIndex
+{
+    return [self setCurrentItemIndex:currentItemIndex animated:NO];
 }
 
 - (BOOL)infiniteScrollingEnabled
@@ -164,13 +150,20 @@
     return 0;
 }
 
-//- (CGFloat)contentInsetLeftRight
-//{
-//    if (self.centeringEnabled) {
-//        return  (self.collectionView.bounds.size.width - self.itemSize.width) * 0.5f;
-//    }
-//    return 0;
-//}
+- (NSInteger)pagesInsetLeft
+{
+    return ceil(self.contentInsetLeft/self.pageWidth);
+}
+
+- (NSInteger)pagesInsetRight
+{
+    return ceil(self.contentInsetRight/self.pageWidth);
+}
+
+- (NSInteger)numberPages
+{
+    return [self.collectionView numberOfItemsInSection:0];
+}
 
 #pragma mark navigation
 - (void)setCurrentItemIndex:(NSInteger)newCurrentItemIndex animated:(BOOL)animated
@@ -191,41 +184,23 @@
 - (void)prepareLayout
 {
     // Handle wrapping the collection view at the boundaries
-    if (self.scrollDirection == UICollectionViewScrollDirectionVertical)
-    {
-        if (self.infiniteScrollingEnabled)
-        {
-            if (self.collectionView.contentOffset.y <= 0.0f)
-            {
-                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, [super collectionViewContentSize].height + self.minimumLineSpacing)];
-            }
-            else if (self.collectionView.contentOffset.y >= [super collectionViewContentSize].height + self.minimumLineSpacing)
-            {
-                [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, 0.0f)];
-            }
-        }
-    }
-    else
+    if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal)
     {
         self.minimumInteritemSpacing = self.collectionView.bounds.size.height + self.itemSize.height;
         if (self.infiniteScrollingEnabled)
         {
-            //NSInteger shiftPage = ceil(self.contentInsetLeft/self.pageWidth);
-            CGFloat offset = self.leftShiftPage * self.pageWidth;
-            CGFloat minXContentRange = offset;//self.contentInsetLeft;
-            CGFloat maxXContentRange = [super collectionViewContentSize].width + self.minimumLineSpacing + offset;//;self.contentInsetLeft;
+            CGFloat offset = self.pagesInsetLeft * self.pageWidth;
+            CGFloat minXContentRange = offset;
+            CGFloat maxXContentRange = [super collectionViewContentSize].width + self.minimumLineSpacing + offset;
             if (self.collectionView.contentOffset.x <= minXContentRange)
             {
-                //self.overload = maxXContentRange;
-                NSLog(@"*");
-                //NSLog(@"(prepareLayout x<=0) overload: %0.0f", self.overload);
                 if (self.pagingStyle == QVCUniSliderFlowLayoutPagingStyleOff)
                 {
                     [self.collectionView setContentOffset:CGPointMake(maxXContentRange, self.collectionView.contentOffset.y)];
                 }
                 else
                 {
-                    NSInteger range = self.leftShiftPage - self.currentPage;
+                    NSInteger range = self.pagesInsetLeft - self.currentPage;
                     if (range>=0) {
                         self.needInvalidate = YES;
                         NSLog(@"(prepareLayout x<=0) old currentPage: %i", self.currentPage);
@@ -235,21 +210,17 @@
                     }
                 }
             }
-            else if
-            (self.collectionView.contentOffset.x >= maxXContentRange)
+            else if (self.collectionView.contentOffset.x >= maxXContentRange)
             {
-                //self.overload = maxXContentRange;
-                NSLog(@"*");
-                //NSLog(@"(prepareLayout x>=width) overload: %0.0f", self.overload);
                 if (self.pagingStyle == QVCUniSliderFlowLayoutPagingStyleOff)
                 {
                     [self.collectionView setContentOffset:CGPointMake(minXContentRange, self.collectionView.contentOffset.y)];
                 }
                 else
                 {
-                    NSInteger range = self.currentPage - self.numberPages - self.leftShiftPage;
+                    NSInteger range = self.currentPage - self.numberPages - self.pagesInsetLeft;
                     if (range >= 0) {
-                        self.needInvalidate;
+                        self.needInvalidate = YES;
                         NSLog(@"(prepareLayout x>=width) old currentPage: %i", self.currentPage);
                         self.currentPage -= self.numberPages;
                         [self.collectionView setContentOffset:CGPointMake(minXContentRange + range*self.pageWidth, self.collectionView.contentOffset.y)];
@@ -265,21 +236,6 @@
         }
     }
     [super prepareLayout];
-}
-
-- (NSInteger)leftShiftPage
-{
-    return ceil(self.contentInsetLeft/self.pageWidth);
-}
-
-- (NSInteger)rigthShiftPage
-{
-    return ceil(self.contentInsetRight/self.pageWidth);
-}
-
-- (NSInteger)numberPages
-{
-    return [self.collectionView numberOfItemsInSection:0];
 }
 
 - (CGSize)collectionViewContentSize
@@ -300,7 +256,7 @@
     }
     if (self.infiniteScrollingEnabled)
     {
-        contentSize.width += (self.leftShiftPage + self.rigthShiftPage) * self.pageWidth;
+        contentSize.width += (self.pagesInsetLeft + self.pagesInsetRight) * self.pageWidth;
     }
     else
     {
@@ -333,7 +289,7 @@
         }
         else
         {
-            if (newBounds.origin.x <= self.collectionView.bounds.size.width)// + self.pageWidth + self.contentInsetLeft)
+            if (newBounds.origin.x <= self.collectionView.bounds.size.width)// + self.pageWidth*self.leftShiftPage)
             {
                 return YES;
             }
@@ -350,62 +306,41 @@
     if (isBoundsSizeCanged) {
         return YES;
     }
-    NSLog(@"newBounds = %@", NSStringFromCGRect(newBounds));
     return [super shouldInvalidateLayoutForBoundsChange:newBounds];
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    rect = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width + self.leftShiftPage*self.pageWidth, rect.size.height);
-    NSLog(@"rect = %@", NSStringFromCGRect(rect));
-    NSArray* layoutAttributes = [super layoutAttributesForElementsInRect:rect];
-    
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical)
     {
-        if (self.infiniteScrollingEnabled)
-        {
-            NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:CGRectMake(rect.origin.x,
-                                                                                              rect.origin.y - [super collectionViewContentSize].height,
-                                                                                              rect.size.width,
-                                                                                              rect.size.height)];
-            
-            for (UICollectionViewLayoutAttributes* attributes in wrappingAttributes)
-            {
-                attributes.center = CGPointMake(attributes.center.x, attributes.center.y + [super collectionViewContentSize].height + self.minimumLineSpacing);
-            }
-            
-            layoutAttributes = [layoutAttributes arrayByAddingObjectsFromArray:wrappingAttributes];
-        }
+        return [super layoutAttributesForElementsInRect:rect];
     }
-    else
+    rect = CGRectMake(rect.origin.x - self.contentInsetLeft, rect.origin.y, rect.size.width, rect.size.height);
+    NSLog(@"Bounds = %@", NSStringFromCGRect(self.collectionView.bounds));
+    NSLog(@"rect = %@", NSStringFromCGRect(rect));
+    NSArray* layoutAttributes = [super layoutAttributesForElementsInRect:rect];
+    if (self.infiniteScrollingEnabled)
     {
-        if (self.infiniteScrollingEnabled)
+        CGFloat superWidth = [super collectionViewContentSize].width;
+        
+        CGRect wrappingRect = CGRectMake(rect.origin.x - superWidth - self.contentInsetLeft,
+                                    rect.origin.y,
+                                    superWidth,
+                                    rect.size.height);
+        
+        NSLog(@"newRect = %@ superWidth = %0.0f", NSStringFromCGRect(wrappingRect), superWidth);
+        NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:wrappingRect];
+        
+        for (UICollectionViewLayoutAttributes* attributes in wrappingAttributes)
         {
-            CGFloat superWidth = [super collectionViewContentSize].width;
-//            CGRect newRect = CGRectMake(rect.origin.x - superWidth - self.pageWidth - self.contentInsetLeft ,
-//                       rect.origin.y,
-//                       superWidth,
-//                       rect.size.height);
-            
-            CGRect newRect = CGRectMake(rect.origin.x - superWidth,
-                                        rect.origin.y,
-                                        rect.size.width,
-                                        rect.size.height);
-            
-            NSLog(@"newRect = %@ superWidth = %0.0f", NSStringFromCGRect(newRect), superWidth);
-            NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:newRect];
-            
-            for (UICollectionViewLayoutAttributes* attributes in wrappingAttributes)
-            {
-                attributes.center = CGPointMake(attributes.center.x + superWidth + self.minimumLineSpacing, attributes.center.y);
-            }
-            
-            layoutAttributes = [layoutAttributes arrayByAddingObjectsFromArray:wrappingAttributes];
+            attributes.center = CGPointMake(attributes.center.x + superWidth + self.minimumLineSpacing, attributes.center.y);
         }
-        for (UICollectionViewLayoutAttributes* attributes in layoutAttributes)
-        {
-            [self correctFrameForItemAttributes:attributes];
-        }
+        
+        layoutAttributes = [layoutAttributes arrayByAddingObjectsFromArray:wrappingAttributes];
+    }
+    for (UICollectionViewLayoutAttributes* attributes in layoutAttributes)
+    {
+        [self correctFrameForItemAttributes:attributes];
     }
     return layoutAttributes;
 }
@@ -437,20 +372,16 @@
 
 -(CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
-    NSLog(@"*");
     NSLog(@"proposedContentOffset: %@", NSStringFromCGPoint(proposedContentOffset));
-    //NSLog(@"proposedContentOffset: overload %0.0f", self.overload);
     if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal
         && self.pagingStyle != QVCUniSliderFlowLayoutPagingStyleOff)
     {
         NSLog(@"proposedContentOffset: pageWidth %0.0f", self.pageWidth);
         NSLog(@"proposedContentOffset: currentPage %i", self.currentPage);
-        //NSLog(@"proposedContentOffset: infiniteCurrentPage %i", self.infiniteCurrentPage);
         NSInteger propousedPage = round(proposedContentOffset.x / self.pageWidth);
         NSLog(@"proposedContentOffset: propousedPage %i", propousedPage);
         if (self.pagingStyle == QVCUniSliderFlowLayoutPagingStyleStepping)
         {
-            //NSInteger currentPage = self.currentPage + self.infiniteCurrentPage;
             if (propousedPage < self.currentPage)
             {
                 propousedPage = self.currentPage - 1;
@@ -468,14 +399,14 @@
         {
             NSInteger maxPageValue = self.numberPages;
             if (self.infiniteScrollingEnabled) {
-                maxPageValue += self.leftShiftPage;
+                maxPageValue += self.pagesInsetLeft;
             }
             if (propousedPage > maxPageValue)
             {
                 propousedPage = maxPageValue;
             }
         }
-        proposedContentOffset.x = propousedPage * self.pageWidth;//candidateAttributes.center.x - self.collectionView.bounds.size.width * 0.5f;
+        proposedContentOffset.x = propousedPage * self.pageWidth;
         self.currentPage = propousedPage;
         NSLog(@"proposedContentOffset: new currentPage: %li", (long)self.currentPage);
     }
