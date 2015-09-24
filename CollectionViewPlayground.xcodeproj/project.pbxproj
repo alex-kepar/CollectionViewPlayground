@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22264F221BB4317500AC2D47 /* UICollectionViewMy.m in Sources */ = {isa = PBXBuildFile; fileRef = 22264F211BB4317500AC2D47 /* UICollectionViewMy.m */; };
 		22264F281BB443B900AC2D47 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22264F271BB443B900AC2D47 /* CalendarViewController.m */; };
+		22264F291BB4567600AC2D47 /* uiCollectionViewMy.m in Sources */ = {isa = PBXBuildFile; fileRef = 22264F211BB4317500AC2D47 /* uiCollectionViewMy.m */; };
 		223CC60E1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 223CC60D1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.m */; };
 		226267FF1BA1834C00F316BF /* QVCUniSliderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 226267FE1BA1834C00F316BF /* QVCUniSliderFlowLayout.m */; };
 		226286041B9852C000699B79 /* MonthCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 226286031B9852C000699B79 /* MonthCalendarView.xib */; };
@@ -41,8 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		22264F201BB4317500AC2D47 /* UICollectionViewMy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewMy.h; sourceTree = "<group>"; };
-		22264F211BB4317500AC2D47 /* UICollectionViewMy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICollectionViewMy.m; sourceTree = "<group>"; };
+		22264F201BB4317500AC2D47 /* uiCollectionViewMy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uiCollectionViewMy.h; sourceTree = "<group>"; };
+		22264F211BB4317500AC2D47 /* uiCollectionViewMy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uiCollectionViewMy.m; sourceTree = "<group>"; };
 		22264F261BB443B900AC2D47 /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
 		22264F271BB443B900AC2D47 /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		223CC60C1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewFlowLayout.h; sourceTree = "<group>"; };
@@ -163,8 +163,8 @@
 				22906A611B84B8DC000E25EA /* KTCenterFlowLayout.h */,
 				22906A621B84B8DC000E25EA /* KTCenterFlowLayout.m */,
 				226286031B9852C000699B79 /* MonthCalendarView.xib */,
-				22264F201BB4317500AC2D47 /* UICollectionViewMy.h */,
-				22264F211BB4317500AC2D47 /* UICollectionViewMy.m */,
+				22264F201BB4317500AC2D47 /* uiCollectionViewMy.h */,
+				22264F211BB4317500AC2D47 /* uiCollectionViewMy.m */,
 				22264F261BB443B900AC2D47 /* CalendarViewController.h */,
 				22264F271BB443B900AC2D47 /* CalendarViewController.m */,
 			);
@@ -306,9 +306,9 @@
 				22B901B31B8F0F9E00459FDD /* MyCyrcleLayout.m in Sources */,
 				22C71FDC1B7E2F9C0090CB31 /* AppDelegate.m in Sources */,
 				223CC60E1B81EFBE00D4D371 /* MyCollectionViewFlowLayout.m in Sources */,
-				22264F221BB4317500AC2D47 /* UICollectionViewMy.m in Sources */,
 				22992D1F1B83377B00C0B5A8 /* MyDetailViewController.m in Sources */,
 				22C720011B7E3B5E0090CB31 /* PagedViewController.m in Sources */,
+				22264F291BB4567600AC2D47 /* uiCollectionViewMy.m in Sources */,
 				226267FF1BA1834C00F316BF /* QVCUniSliderFlowLayout.m in Sources */,
 				22264F281BB443B900AC2D47 /* CalendarViewController.m in Sources */,
 				22992D1C1B8318E600C0B5A8 /* MyCollectionViewCell.m in Sources */,
