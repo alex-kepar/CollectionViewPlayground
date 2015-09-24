@@ -223,7 +223,7 @@
                         self.needInvalidate = YES;
                         NSLog(@"(prepareLayout x>=width) old currentPage: %i", self.currentPage);
                         self.currentPage -= self.numberPages;
-                        [self.collectionView setContentOffset:CGPointMake(minXContentRange + range*self.pageWidth, self.collectionView.contentOffset.y)];
+                        [self.collectionView setContentOffset:CGPointMake(minXContentRange + range*self.pageWidth, self.collectionView.contentOffset.y) animated:NO];
                         NSLog(@"(prepareLayout x>=width) new currentPage: %i", self.currentPage);
                     }
                 }
@@ -316,8 +316,8 @@
         return [super layoutAttributesForElementsInRect:rect];
     }
     rect = CGRectMake(rect.origin.x - self.contentInsetLeft, rect.origin.y, rect.size.width, rect.size.height);
-    NSLog(@"Bounds = %@", NSStringFromCGRect(self.collectionView.bounds));
-    NSLog(@"rect = %@", NSStringFromCGRect(rect));
+    //NSLog(@"Bounds = %@", NSStringFromCGRect(self.collectionView.bounds));
+    //NSLog(@"rect = %@", NSStringFromCGRect(rect));
     NSArray* layoutAttributes = [super layoutAttributesForElementsInRect:rect];
     if (self.infiniteScrollingEnabled)
     {
@@ -328,7 +328,7 @@
                                     superWidth,
                                     rect.size.height);
         
-        NSLog(@"newRect = %@ superWidth = %0.0f", NSStringFromCGRect(wrappingRect), superWidth);
+        //NSLog(@"newRect = %@ superWidth = %0.0f", NSStringFromCGRect(wrappingRect), superWidth);
         NSArray* wrappingAttributes = [super layoutAttributesForElementsInRect:wrappingRect];
         
         for (UICollectionViewLayoutAttributes* attributes in wrappingAttributes)

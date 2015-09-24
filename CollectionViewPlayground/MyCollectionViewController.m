@@ -45,6 +45,19 @@ static NSString * const reuseIdentifier = @"cellsTemplate";
         layout.fastSlippingEnabled = self.fastSlippingEnabled;
         layout.infiniteScrollingEnabled = self.infiniteScrollingEnabled;
     }
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleTapGesture:)];
+    //tapGesture.delaysTouchesBegan = YES;
+    //tapGesture.numberOfTapsRequired = 2;
+    tapGesture.cancelsTouchesInView = NO;
+    [self.collectionView addGestureRecognizer:tapGesture];
+    
+}
+
+- (void)handleTapGesture:(UITapGestureRecognizer*)tapGesture
+{
+    NSLog(@"fffffffffffff");
 }
 
 - (void)viewWillAppear:(BOOL)animated
