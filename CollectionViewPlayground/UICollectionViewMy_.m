@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 QVC. All rights reserved.
 //
 
-#import "UICollectionViewMy.h"
+#import "UICollectionViewMy_.h"
 
 @implementation UICollectionViewMy
 
