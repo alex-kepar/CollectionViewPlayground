@@ -1,12 +1,12 @@
 //
-//  uiCollectionViewMy.m
+//  UICollectionViewMy.m
 //  CollectionViewPlayground
 //
 //  Created by Oleksandr Kiporenko on 9/24/15.
 //  Copyright (c) 2015 QVC. All rights reserved.
 //
 
-#import "UICollectionViewMy_.h"
+#import "UICollectionViewMy.h"
 
 @implementation UICollectionViewMy
 
