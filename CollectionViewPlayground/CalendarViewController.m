@@ -40,7 +40,42 @@ static NSString * const reuseIdentifier = @"cellsTemplate";
 */
 - (IBAction)buttonAction:(id)sender {
     if (self.collectionView.hidden) {
-        self.collectionView.hidden = NO;
+        
+        void (^showBlock)() = ^void() {
+            CGRect frame = self.collectionView.frame;
+            self.collectionView.frame = CGRectMake(frame.origin.x, 0 - frame.size.height, frame.size.width, frame.size.height);
+            self.collectionView.hidden = NO;
+            self.collectionView.frame = frame;
+        };
+
+//        [UIView animateWithDuration:1
+//                         animations:showBlock];
+        
+//        [UIView transitionWithView:self.collectionView
+//                          duration:0.5
+//                           options:UIViewAnimationOptionTransitionCurlDown
+//                        animations:showBlock
+//                        completion:nil];
+
+//        [UIView animateWithDuration:0.5
+//                              delay:0
+//             usingSpringWithDamping:1
+//              initialSpringVelocity:0.8
+//                            options:animationOptions
+//                         animations:showBlock
+//                         completion:nil];
+        
+        [UIView animateWithDuration:0.5
+                              delay:0
+             usingSpringWithDamping:1
+              initialSpringVelocity:0.8
+                            options:UIViewAnimationOptionTransitionNone
+                         animations:showBlock
+                         completion:^(BOOL finished) {
+                             if (finished) {
+                                 NSLog(@"aaaaaaa");
+                             }
+                         }];
     }
 }
 
